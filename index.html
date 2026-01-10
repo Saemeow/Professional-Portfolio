@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Developer Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 60px;
+            animation: bounce 2s infinite;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 25px;
+            border-radius: 25px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-links a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .section {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            animation: fadeInUp 1s ease;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #f5576c;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .skill-card {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            transform: scale(1.1) rotate(2deg);
+            background: rgba(255,255,255,0.25);
+        }
+
+        .skill-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .project-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .project-card p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="profile-img floating">💻</div>
+            <h1>Your Name</h1>
+            <p class="tagline">Web Developer | Game Developer | Interactive Experience Creator</p>
+            <div class="social-links">
+                <a href="https://github.com/yourusername" target="_blank">🐙 GitHub</a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank">💼 LinkedIn</a>
+                <a href="mailto:your.email@example.com">📧 Email</a>
+                <a href="https://yourwebsite.com" target="_blank">🌐 Website</a>
+            </div>
+        </header>
+
+        <div class="section">
+            <h2>About Me</h2>
+            <p style="line-height: 1.8; margin-top: 20px;">
+                Full-stack web developer and game developer passionate about creating immersive digital experiences. 
+                I build responsive web applications and engaging games that bring ideas to life. From sleek websites 
+                to interactive 2D/3D games, I love crafting experiences that users enjoy. Whether it's React frontends, 
+                game mechanics in Unity, or pixel-perfect designs, I'm always pushing the boundaries of what's possible.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">⚛️</div>
+                    <strong>React</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">☕</div>
+                    <strong>JavaScript</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🎮</div>
+                    <strong>Unity</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">💎</div>
+                    <strong>C#</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🎨</div>
+                    <strong>HTML/CSS</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🚀</div>
+                    <strong>Node.js</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔺</div>
+                    <strong>Three.js</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🎯</div>
+                    <strong>Godot</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📱</div>
+                    <strong>Responsive Design</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🕹️</div>
+                    <strong>Game Physics</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔧</div>
+                    <strong>Git</strong>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <strong>WebGL</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Featured Projects</h2>
+            <div class="projects">
+                <div class="project-card">
+                    <h3>🎮 Pixel Adventure Game</h3>
+                    <p>2D platformer game built with Unity and C#. Features custom physics, level design, collectibles, and smooth character animations. Published on itch.io with 1000+ plays.</p>
+                </div>
+                <div class="project-card">
+                    <h3>🌐 Interactive Portfolio Site</h3>
+                    <p>Modern portfolio website with stunning animations using React, Three.js, and GSAP. Features 3D elements, smooth scrolling, and responsive design.</p>
+                </div>
+                <div class="project-card">
+                    <h3>🕹️ Multiplayer Web Game</h3>
+                    <p>Real-time multiplayer browser game using WebSockets, Node.js, and Canvas API. Supports 20+ concurrent players with synchronized game state.</p>
+                </div>
+                <div class="project-card">
+                    <h3>🎨 E-Commerce Platform</h3>
+                    <p>Full-stack shopping site with React frontend, Node.js backend, and payment integration. Features cart management, user authentication, and admin dashboard.</p>
+                </div>
+                <div class="project-card">
+                    <h3>🚀 Space Shooter</h3>
+                    <p>Arcade-style space shooter game developed in Godot. Includes enemy AI, power-ups, particle effects, and progressive difficulty system.</p>
+                </div>
+                <div class="project-card">
+                    <h3>📱 Task Management App</h3>
+                    <p>Responsive web app for team collaboration built with React and Firebase. Real-time updates, drag-and-drop interface, and cloud synchronization.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>GitHub Stats</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">60+</div>
+                    <div class="stat-label">Repositories</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">12+</div>
+                    <div class="stat-label">Games Published</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Web Projects</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">5K+</div>
+                    <div class="stat-label">Game Downloads</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🎮 Built with passion, powered by pixels and code ⚡</p>
+            <p style="margin-top: 10px;">© 2026 Your Name. Let's create amazing web and game experiences together!</p>
+        </footer>
+    </div>
+</body>
+</html>
