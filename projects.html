@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Your Name</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">Your Name</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="certifications.html">Certifications</a></li>
+                <li><a href="activities.html">Activities</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="section">
+            <h2>Featured Projects</h2>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProjects('all')">All</button>
+                <button class="filter-btn" onclick="filterProjects('web')">Web Dev</button>
+                <button class="filter-btn" onclick="filterProjects('game')">Games</button>
+            </div>
+
+            <div class="projects" id="projectsContainer">
+                <div class="project-card" data-category="game">
+                    <h3>🎮 Pixel Adventure Game</h3>
+                    <p>2D platformer game built with Unity and C#. Features custom physics, level design, 
+                    collectibles, and smooth character animations. Published on itch.io with 1000+ plays.</p>
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">2D</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" target="_blank">View Demo</a>
+                        <a href="#" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="web">
+                    <h3>🌐 Interactive Portfolio Site</h3>
+                    <p>Modern portfolio website with stunning animations using React, Three.js, and GSAP. 
+                    Features 3D elements, smooth scrolling, and responsive design.</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Three.js</span>
+                        <span class="tag">GSAP</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" target="_blank">View Demo</a>
+                        <a href="#" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="game">
+                    <h3>🕹️ Multiplayer Web Game</h3>
+                    <p>Real-time multiplayer browser game using WebSockets, Node.js, and Canvas API. 
+                    Supports 20+ concurrent players with synchronized game state.</p>
+                    <div class="project-tags">
+                        <span class="tag">WebSockets</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Canvas</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" target="_blank">View Demo</a>
+                        <a href="#" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="web">
+                    <h3>🎨 E-Commerce Platform</h3>
+                    <p>Full-stack shopping site with React frontend, Node.js backend, and payment integration. 
+                    Features cart management, user authentication, and admin dashboard.</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">MongoDB</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" target="_blank">View Demo</a>
+                        <a href="#" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="game">
+                    <h3>🚀 Space Shooter</h3>
+                    <p>Arcade-style space shooter game developed in Godot. Includes enemy AI, power-ups, 
+                    particle effects, and progressive difficulty system.</p>
+                    <div class="project-tags">
+                        <span class="tag">Godot</span>
+                        <span class="tag">GDScript</span>
+                        <span class="tag">2D</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" target="_blank">View Demo</a>
+                        <a href="#" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="web">
+                    <h3>📱 Task Management App</h3>
+                    <p>Responsive web app for team collaboration built with React and Firebase. 
+                    Real-time updates, drag-and-drop interface, and cloud synchronization.</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">Real-time</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" target="_blank">View Demo</a>
+                        <a href="#" target="_blank">Source Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🎮 Built with passion, powered by pixels and code ⚡</p>
+            <p style="margin-top: 10px;">© 2026 Your Name. Let's create amazing web and game experiences together!</p>
+        </footer>
+    </div>
+
+    <script src="assets/js/projects.js"></script>
+
+    <style>
+        .filter-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 10px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .tag {
+            background: rgba(255,215,0,0.2);
+            color: #ffd700;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .project-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .project-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+    </style>
+</body>
+</html>
