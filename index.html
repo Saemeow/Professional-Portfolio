@@ -153,10 +153,372 @@
             </div>
         </div>
 
+        <!-- Games Section -->
+        <div class="games-section">
+            <h2>🎮 Interactive Demos</h2>
+            <div class="games-container">
+                <!-- Snake Game -->
+                <div class="game-wrapper">
+                    <h3>🐍 Snake Game</h3>
+                    <div class="snake-game">
+                        <h1 class="snake-title">🐍 SNAKE</h1>
+                        <div class="score-board">
+                            Score: <span id="score">0</span>
+                        </div>
+                        <canvas id="snakeCanvas" width="500" height="500"></canvas>
+                        
+                        <!-- Game Over Screen inside Snake Game -->
+                        <div id="gameOverScreen">
+                            <h2>GAME OVER!</h2>
+                            <p>Final Score: <span id="finalScore">0</span></p>
+                            <button class="restart-btn" onclick="restartGame()">PLAY AGAIN</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fireworks Display -->
+                <div class="game-wrapper">
+                    <h3>🎆 Fireworks Display</h3>
+                    <div class="fireworks-container">
+                        <canvas id="fireworksCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer>
             <p>🎮 Built with passion, powered by pixels and code ⚡</p>
             <p style="margin-top: 10px;">© 2026 Your Name. Let's create amazing web and game experiences together!</p>
         </footer>
     </div>
+
+    <script>
+        // ============ SNAKE GAME ============
+        const canvas = document.getElementById('snakeCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        const finalScoreElement = document.getElementById('finalScore');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+
+        const TILE_SIZE = 20;
+        const GRID_WIDTH = 25;
+        const GRID_HEIGHT = 25;
+        const GAME_SPEED = 100;
+
+        let snake = [];
+        let food = {};
+        let direction = 'RIGHT';
+        let nextDirection = 'RIGHT';
+        let running = false;
+        let gameOver = false;
+        let score = 0;
+        let gameLoop = null;
+
+        function initSnake() {
+            canvas.width = GRID_WIDTH * TILE_SIZE;
+            canvas.height = GRID_HEIGHT * TILE_SIZE;
+            startGame();
+        }
+
+        function startGame() {
+            snake = [
+                { x: 5, y: 5 },
+                { x: 4, y: 5 },
+                { x: 3, y: 5 }
+            ];
+            
+            direction = 'RIGHT';
+            nextDirection = 'RIGHT';
+            score = 0;
+            gameOver = false;
+            running = true;
+            
+            updateScore();
+            gameOverScreen.classList.remove('show');
+            spawnFood();
+            
+            if (gameLoop) clearInterval(gameLoop);
+            gameLoop = setInterval(update, GAME_SPEED);
+        }
+
+        function spawnFood() {
+            let validPosition = false;
+            while (!validPosition) {
+                food = {
+                    x: Math.floor(Math.random() * GRID_WIDTH),
+                    y: Math.floor(Math.random() * GRID_HEIGHT)
+                };
+                validPosition = !snake.some(segment => 
+                    segment.x === food.x && segment.y === food.y
+                );
+            }
+        }
+
+        function update() {
+            if (!running) return;
+
+            direction = nextDirection;
+            const head = { ...snake[0] };
+
+            switch (direction) {
+                case 'UP': head.y--; break;
+                case 'DOWN': head.y++; break;
+                case 'LEFT': head.x--; break;
+                case 'RIGHT': head.x++; break;
+            }
+
+            if (head.x < 0 || head.x >= GRID_WIDTH || 
+                head.y < 0 || head.y >= GRID_HEIGHT) {
+                endGame();
+                return;
+            }
+
+            if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+                endGame();
+                return;
+            }
+
+            snake.unshift(head);
+
+            if (head.x === food.x && head.y === food.y) {
+                score += 10;
+                updateScore();
+                spawnFood();
+            } else {
+                snake.pop();
+            }
+
+            draw();
+        }
+
+        function draw() {
+            ctx.fillStyle = '#9bbc0f';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#306230';
+            ctx.fillRect(
+                food.x * TILE_SIZE,
+                food.y * TILE_SIZE,
+                TILE_SIZE,
+                TILE_SIZE
+            );
+
+            snake.forEach((segment, index) => {
+                ctx.fillStyle = index === 0 ? '#0f380f' : '#306230';
+                ctx.fillRect(
+                    segment.x * TILE_SIZE,
+                    segment.y * TILE_SIZE,
+                    TILE_SIZE,
+                    TILE_SIZE
+                );
+            });
+        }
+
+        function endGame() {
+            running = false;
+            gameOver = true;
+            clearInterval(gameLoop);
+            finalScoreElement.textContent = score;
+            gameOverScreen.classList.add('show');
+        }
+
+        function updateScore() {
+            scoreElement.textContent = score;
+        }
+
+        function restartGame() {
+            startGame();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (gameOver && e.code === 'Space') {
+                restartGame();
+                return;
+            }
+
+            if (!running) return;
+
+            switch (e.key) {
+                case 'ArrowUp':
+                case 'w':
+                case 'W':
+                    if (direction !== 'DOWN') nextDirection = 'UP';
+                    e.preventDefault();
+                    break;
+                case 'ArrowDown':
+                case 's':
+                case 'S':
+                    if (direction !== 'UP') nextDirection = 'DOWN';
+                    e.preventDefault();
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                case 'A':
+                    if (direction !== 'RIGHT') nextDirection = 'LEFT';
+                    e.preventDefault();
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                case 'D':
+                    if (direction !== 'LEFT') nextDirection = 'RIGHT';
+                    e.preventDefault();
+                    break;
+            }
+        });
+
+        // ============ FIREWORKS DISPLAY ============
+        const fireworksCanvas = document.getElementById('fireworksCanvas');
+        const fwCtx = fireworksCanvas.getContext('2d');
+        
+        function resizeFireworksCanvas() {
+            const container = fireworksCanvas.parentElement;
+            fireworksCanvas.width = container.clientWidth;
+            fireworksCanvas.height = container.clientHeight;
+        }
+        
+        resizeFireworksCanvas();
+        window.addEventListener('resize', resizeFireworksCanvas);
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 8,
+                    y: (Math.random() - 0.5) * 8
+                };
+                this.alpha = 1;
+                this.decay = Math.random() * 0.015 + 0.01;
+                this.gravity = 0.05;
+                this.size = Math.random() * 3 + 1;
+            }
+            
+            update() {
+                this.velocity.y += this.gravity;
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= this.decay;
+            }
+            
+            draw() {
+                fwCtx.save();
+                fwCtx.globalAlpha = this.alpha;
+                fwCtx.fillStyle = this.color;
+                fwCtx.beginPath();
+                fwCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                fwCtx.fill();
+                fwCtx.restore();
+            }
+        }
+
+        class Firework {
+            constructor() {
+                this.x = Math.random() * fireworksCanvas.width;
+                this.y = fireworksCanvas.height;
+                this.targetY = Math.random() * fireworksCanvas.height * 0.5 + 50;
+                this.velocity = (this.y - this.targetY) / 60;
+                this.particles = [];
+                this.exploded = false;
+                this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+                this.trailParticles = [];
+            }
+            
+            update() {
+                if (!this.exploded) {
+                    this.y -= this.velocity;
+                    
+                    if (Math.random() < 0.3) {
+                        this.trailParticles.push({
+                            x: this.x,
+                            y: this.y,
+                            alpha: 0.5,
+                            size: 2
+                        });
+                    }
+                    
+                    if (this.y <= this.targetY) {
+                        this.explode();
+                    }
+                } else {
+                    this.particles.forEach((p, i) => {
+                        p.update();
+                        if (p.alpha <= 0) {
+                            this.particles.splice(i, 1);
+                        }
+                    });
+                }
+                
+                this.trailParticles.forEach((t, i) => {
+                    t.alpha -= 0.02;
+                    if (t.alpha <= 0) {
+                        this.trailParticles.splice(i, 1);
+                    }
+                });
+            }
+            
+            explode() {
+                this.exploded = true;
+                const particleCount = Math.random() * 50 + 100;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    this.particles.push(new Particle(this.x, this.y, this.color));
+                }
+            }
+            
+            draw() {
+                if (!this.exploded) {
+                    this.trailParticles.forEach(t => {
+                        fwCtx.save();
+                        fwCtx.globalAlpha = t.alpha;
+                        fwCtx.fillStyle = this.color;
+                        fwCtx.beginPath();
+                        fwCtx.arc(t.x, t.y, t.size, 0, Math.PI * 2);
+                        fwCtx.fill();
+                        fwCtx.restore();
+                    });
+                    
+                    fwCtx.fillStyle = this.color;
+                    fwCtx.beginPath();
+                    fwCtx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                    fwCtx.fill();
+                } else {
+                    this.particles.forEach(p => p.draw());
+                }
+            }
+            
+            isDone() {
+                return this.exploded && this.particles.length === 0;
+            }
+        }
+
+        const fireworks = [];
+        let lastFireworkTime = 0;
+
+        function animateFireworks(currentTime) {
+            fwCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            fwCtx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+            
+            if (currentTime - lastFireworkTime > Math.random() * 500 + 500) {
+                fireworks.push(new Firework());
+                lastFireworkTime = currentTime;
+            }
+            
+            fireworks.forEach((fw, i) => {
+                fw.update();
+                fw.draw();
+                
+                if (fw.isDone()) {
+                    fireworks.splice(i, 1);
+                }
+            });
+            
+            requestAnimationFrame(animateFireworks);
+        }
+
+        // Start both games
+        initSnake();
+        animateFireworks(0);
+    </script>
 </body>
 </html>
